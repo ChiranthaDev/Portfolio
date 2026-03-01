@@ -1,19 +1,68 @@
 "use client";
 
-import { Video, ArrowLeft, Save, Link as LinkIcon } from "lucide-react";
+import { Video, ArrowLeft, Save, Link as LinkIcon, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NewVideoPage() {
+    const router = useRouter();
     const [title, setTitle] = useState("");
     const [platform, setPlatform] = useState("");
     const [link, setLink] = useState("");
 
-    const handleSave = (e: React.FormEvent) => {
+    const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const uploadImage = async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!res.ok) throw new Error("Upload failed");
+        const data = await res.json();
+        return data.url;
+    };
+
+    const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock save action
-        console.log("Saved video", { title, platform, link });
-        alert("Video added successfully! (Mock Action)");
+        if (!title || !platform || !link) return alert("Please fill all required fields");
+
+        setIsSubmitting(true);
+        try {
+            let thumbnailUrl = "";
+
+            if (thumbnailFile) {
+                thumbnailUrl = await uploadImage(thumbnailFile);
+            }
+
+            const videoData = {
+                title,
+                platform,
+                link,
+                thumbnail: thumbnailUrl,
+            };
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/videos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(videoData)
+            });
+
+            if (!res.ok) throw new Error("Failed to save video");
+
+            router.push('/admin/videos');
+        } catch (err) {
+            console.error(err);
+            alert("An error occurred while saving.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -33,9 +82,13 @@ export default function NewVideoPage() {
                     <Link href="/admin/videos" className="rounded-xl border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 shadow-sm transition-all hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800">
                         Cancel
                     </Link>
-                    <button onClick={handleSave} className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800">
-                        <Save className="h-4 w-4" />
-                        Save Video
+                    <button
+                        onClick={handleSave}
+                        disabled={isSubmitting}
+                        className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800 disabled:opacity-50"
+                    >
+                        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                        {isSubmitting ? 'Saving...' : 'Save Video'}
                     </button>
                 </div>
             </div>
@@ -92,15 +145,32 @@ export default function NewVideoPage() {
                         </div>
 
                         {/* Thumbnail Upload  */}
-                        <div className="space-y-2">
+                        <div className="space-y-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
                             <label className="text-sm font-semibold text-neutral-900 dark:text-white flex justify-between">
                                 Custom Thumbnail
                                 <span className="text-xs text-neutral-500 font-normal">Optional</span>
                             </label>
-                            <button type="button" className="flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-10 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10">
-                                <Video className="h-6 w-6" />
-                                <span>Click to upload local thumbnail</span>
-                                <span className="text-xs font-normal text-neutral-400">If skipping, thumbnail will be fetched via URL.</span>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                ref={fileInputRef}
+                                onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-10 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10"
+                            >
+                                {thumbnailFile ? (
+                                    <span className="text-[#FF0000] font-semibold">{thumbnailFile.name}</span>
+                                ) : (
+                                    <>
+                                        <Video className="h-6 w-6" />
+                                        <span>Click to upload local thumbnail</span>
+                                        <span className="text-xs font-normal text-neutral-400">If skipping, thumbnail will be fetched via URL.</span>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>

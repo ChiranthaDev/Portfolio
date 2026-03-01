@@ -1,19 +1,72 @@
 "use client";
 
-import { FileText, ArrowLeft, Save, Image as ImageIcon } from "lucide-react";
+import { FileText, ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NewBlogPostPage() {
+    const router = useRouter();
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [linkedinLink, setLinkedinLink] = useState("");
+    const [status, setStatus] = useState("Draft");
 
-    const handleSave = (e: React.FormEvent) => {
+    const [coverFile, setCoverFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const uploadImage = async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!res.ok) throw new Error("Upload failed");
+        const data = await res.json();
+        return data.url;
+    };
+
+    const handleSave = async (e: React.FormEvent, saveStatus: string) => {
         e.preventDefault();
-        // Mock save action
-        console.log("Saved blog post", { title, category, linkedinLink });
-        alert("Blog post saved successfully! (Mock Action)");
+        if (!title || !category || !linkedinLink) return alert("Please fill all required fields");
+
+        setIsSubmitting(true);
+        setStatus(saveStatus);
+
+        try {
+            let coverImageUrl = "";
+
+            if (coverFile) {
+                coverImageUrl = await uploadImage(coverFile);
+            }
+
+            const blogData = {
+                title,
+                category,
+                linkedinLink,
+                coverImage: coverImageUrl,
+                status: saveStatus,
+            };
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(blogData)
+            });
+
+            if (!res.ok) throw new Error("Failed to save blog post");
+
+            router.push('/admin/blogs');
+        } catch (err) {
+            console.error(err);
+            alert("An error occurred while saving.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -30,19 +83,27 @@ export default function NewBlogPostPage() {
                     </h1>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="rounded-xl border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 shadow-sm transition-all hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800">
+                    <button
+                        onClick={(e) => handleSave(e, "Draft")}
+                        disabled={isSubmitting}
+                        className="rounded-xl border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 shadow-sm transition-all hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 disabled:opacity-50"
+                    >
                         Save as Draft
                     </button>
-                    <button onClick={handleSave} className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800">
-                        <Save className="h-4 w-4" />
-                        Publish Post
+                    <button
+                        onClick={(e) => handleSave(e, "Published")}
+                        disabled={isSubmitting}
+                        className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800 disabled:opacity-50"
+                    >
+                        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                        {isSubmitting ? 'Saving...' : 'Publish Post'}
                     </button>
                 </div>
             </div>
 
             {/* Form Section */}
             <div className="rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-[#111] overflow-hidden">
-                <form onSubmit={handleSave} className="p-6 md:p-8 space-y-8">
+                <form className="p-6 md:p-8 space-y-8">
                     {/* General Info */}
                     <div className="space-y-6">
                         <div className="grid gap-6 md:grid-cols-2">
@@ -63,6 +124,7 @@ export default function NewBlogPostPage() {
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                     className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-[#FF0000] focus:outline-none focus:ring-1 focus:ring-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:focus:border-[#FF0000]"
+                                    required
                                 >
                                     <option value="" disabled>Select category</option>
                                     <option value="UI/UX Design">UI/UX Design</option>
@@ -75,10 +137,30 @@ export default function NewBlogPostPage() {
 
                         {/* Cover Image */}
                         <div className="space-y-2">
-                            <label className="text-sm font-semibold text-neutral-900 dark:text-white">Cover Image</label>
-                            <button type="button" className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-12 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10">
-                                <ImageIcon className="h-6 w-6" />
-                                Click to upload image cover
+                            <label className="text-sm font-semibold text-neutral-900 dark:text-white flex justify-between">
+                                Cover Image
+                                <span className="text-xs text-neutral-500 font-normal">Optional</span>
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                ref={fileInputRef}
+                                onChange={(e) => setCoverFile(e.target.files?.[0] || null)}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-12 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10"
+                            >
+                                {coverFile ? (
+                                    <span className="text-[#FF0000] font-semibold">{coverFile.name}</span>
+                                ) : (
+                                    <>
+                                        <ImageIcon className="h-6 w-6" />
+                                        <span>Click to upload image cover</span>
+                                    </>
+                                )}
                             </button>
                         </div>
 

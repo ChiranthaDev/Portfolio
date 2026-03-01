@@ -1,54 +1,52 @@
 "use client";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import SplitOverlay from "../../../components/SplitOverlay";
 import Navbar from "../../../components/Navbar";
 
-const blogPosts = [
-    {
-        id: "1",
-        title: "The Anatomy of a High-Converting Landing Page",
-        date: "March 12, 2026",
-        category: "UI/UX Design",
-        readTime: "5 min read",
-        image: "/img/others/blog1.svg"
-    },
-    {
-        id: "2",
-        title: "Why Next.js App Router is a Game Changer",
-        date: "February 28, 2026",
-        category: "Web Engineering",
-        readTime: "7 min read",
-        image: "/img/others/blog2.png"
-    },
-    {
-        id: "3",
-        title: "Mastering Animations with Framer Motion",
-        date: "January 14, 2026",
-        category: "Frontend Design",
-        readTime: "6 min read",
-        image: "/img/others/blog3.avif"
-    },
-    {
-        id: "4",
-        title: "The Psychology of Color in Digital Interface",
-        date: "December 05, 2025",
-        category: "Design Systems",
-        readTime: "4 min read",
-        image: "/img/qordex.png"
-    }
-];
+interface BlogPost {
+    id: string;
+    title: string;
+    category: string;
+    linkedinLink: string;
+    coverImage: string;
+    status: string;
+}
 
 export default function BlogArchivePage() {
     const [searchQuery, setSearchQuery] = useState("");
+    const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchBlogs = async () => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, { cache: 'no-store' });
+            if (!res.ok) throw new Error("Failed to load");
+            const data = await res.json();
+            // Optional: Filter out drafted posts
+            const published = data.filter((p: BlogPost) => p.status !== 'Draft');
+            setBlogPosts(published);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
 
     const filteredPosts = blogPosts.filter(post =>
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    // Helper to format date if needed, fallback for mock UI
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
         <div className="min-h-screen bg-white dark:bg-black text-neutral-900 dark:text-neutral-200 selection:bg-neutral-900 selection:text-white transition-colors duration-300">
@@ -128,36 +126,44 @@ export default function BlogArchivePage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-                        {filteredPosts.length > 0 ? (
-                            filteredPosts.map((post) => (
-                                <Link href={`/blog/${post.id}`} key={post.id} className="group cursor-pointer block">
-                                    <article className="flex h-full flex-col p-4 bg-transparent hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-3xl transition-colors">
-                                        <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-800 shadow-sm border border-neutral-200 dark:border-neutral-800">
-                                            <Image
-                                                src={post.image}
-                                                alt={post.title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                            />
-                                        </div>
-                                        <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-wider text-[#FF0000] mb-3">
-                                            <span>{post.category}</span>
-                                        </div>
-                                        <h3 className="font-oswald text-2xl font-bold leading-snug text-neutral-900 dark:text-white transition-colors group-hover:text-neutral-600 dark:group-hover:text-neutral-300 mb-2 flex-grow">
-                                            {post.title}
-                                        </h3>
-                                        <p className="mt-auto text-sm text-neutral-500 dark:text-neutral-400">{post.date} • {post.readTime}</p>
-                                    </article>
-                                </Link>
-                            ))
-                        ) : (
-                            <div className="col-span-full py-20 text-center">
-                                <h3 className="font-oswald text-2xl font-bold text-neutral-900 dark:text-white mb-2">No articles found</h3>
-                                <p className="text-neutral-500 dark:text-neutral-400">We couldn&apos;t find any articles matching &quot;{searchQuery}&quot;.</p>
-                            </div>
-                        )}
-                    </div>
+                    {isLoading ? (
+                        <div className="flex w-full items-center justify-center py-20">
+                            <Loader2 className="h-10 w-10 animate-spin text-neutral-300" />
+                        </div>
+                    ) : (
+                        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+                            {filteredPosts.length > 0 ? (
+                                filteredPosts.map((post) => (
+                                    <a href={post.linkedinLink} target="_blank" rel="noopener noreferrer" key={post.id} className="group cursor-pointer block">
+                                        <article className="flex h-full flex-col p-4 bg-transparent hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-3xl transition-colors">
+                                            <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-800 shadow-sm border border-neutral-200 dark:border-neutral-800">
+                                                {post.coverImage && (
+                                                    <Image
+                                                        src={post.coverImage}
+                                                        alt={post.title}
+                                                        fill
+                                                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-wider text-[#FF0000] mb-3">
+                                                <span>{post.category}</span>
+                                            </div>
+                                            <h3 className="font-oswald text-2xl font-bold leading-snug text-neutral-900 dark:text-white transition-colors group-hover:text-neutral-600 dark:group-hover:text-neutral-300 mb-2 flex-grow">
+                                                {post.title}
+                                            </h3>
+                                            <p className="mt-auto text-sm text-neutral-500 dark:text-neutral-400">{today} • Read on LinkedIn</p>
+                                        </article>
+                                    </a>
+                                ))
+                            ) : (
+                                <div className="col-span-full py-20 text-center">
+                                    <h3 className="font-oswald text-2xl font-bold text-neutral-900 dark:text-white mb-2">No articles found</h3>
+                                    <p className="text-neutral-500 dark:text-neutral-400">We couldn&apos;t find any articles matching &quot;{searchQuery}&quot;.</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </motion.section>
 
             </main>
