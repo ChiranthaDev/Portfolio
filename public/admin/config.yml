@@ -1,0 +1,71 @@
+backend:
+  name: git-gateway # Tells the CMS to authenticate via Netlify Identity tracking your GitHub repo
+  branch: main
+
+media_folder: "public/img/uploads" # Folder where uploaded files are saved in GitHub
+public_folder: "/img/uploads"      # The URL prefix for images on your live site
+
+collections:
+  # 1. Developer Projects
+  - name: "developer_projects"
+    label: "Developer Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Thumbnail Image (Main Gallery)", name: "thumbnail", widget: "image" }
+      - { label: "Cover Image (16:9 Details Header)", name: "coverImage", widget: "image" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Year", name: "year", widget: "string" }
+      - { label: "Live Site URL", name: "liveUrl", widget: "string" }
+      - { 
+          label: "Extra Gallery Images (Bottom Details)", 
+          name: "gallery", 
+          widget: "list", 
+          field: { label: "Image", name: "image", widget: "image" }, 
+          required: false 
+        }
+
+  # 2. Graphic Designs
+  - name: "graphic_designs"
+    label: "Graphic Designs"
+    folder: "src/content/designs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Category",
+          name: "category",
+          widget: "select",
+          options: ["Logo Design", "Flyer Design", "Pattern Design"]
+        }
+      - { label: "Graphic Image", name: "image", widget: "image" }
+
+  # 3. Blogs (Redirects to LinkedIn)
+  - name: "blogs"
+    label: "Blog Posts (LinkedIn Redirects)"
+    folder: "src/content/blogs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Preview Thumbnail", name: "image", widget: "image" }
+      - { label: "Date", name: "date", widget: "datetime", format: "MMMM DD, YYYY" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
+      - { label: "LinkedIn Post URL", name: "url", widget: "string" }
+
+  # 4. Content Videos (Redirects to TikTok/YT/FB)
+  - name: "videos"
+    label: "Content Videos (Ex. TikTok)"
+    folder: "src/content/videos"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Platform", name: "platform", widget: "select", options: ["TikTok", "YouTube", "Facebook"] }
+      - { label: "Video Preview Thumbnail", name: "image", widget: "image" }
+      - { label: "Video URL", name: "url", widget: "string" }
