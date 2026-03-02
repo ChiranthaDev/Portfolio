@@ -23,7 +23,7 @@ export default function BlogsAdminPage() {
     const fetchBlogs = async () => {
         try {
             const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
-            const res = await fetch(`${baseUrl}/api/blogs`, { cache: 'no-store' });
+            const res = await fetch(`${baseUrl}/api/blogs?t=${Date.now()}`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             setBlogs(data);

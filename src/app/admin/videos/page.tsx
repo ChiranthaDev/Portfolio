@@ -22,7 +22,7 @@ export default function VideosAdminPage() {
     const fetchVideos = async () => {
         try {
             const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
-            const res = await fetch(`${baseUrl}/api/videos`, { cache: 'no-store' });
+            const res = await fetch(`${baseUrl}/api/videos?t=${Date.now()}`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             setVideos(data);
