@@ -19,6 +19,45 @@ const CARD_WIDTH = 380;
 const CARD_GAP = 20;
 const STEP = CARD_WIDTH + CARD_GAP;
 
+const SAMPLE_PROJECTS: Project[] = [
+  {
+    id: "sample-1",
+    title: "Chiraa Portfolio",
+    type: "Full-Stack Web App",
+    role: "Developer",
+    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    link: "https://github.com",
+    additionalImages: [],
+  },
+  {
+    id: "sample-2",
+    title: "E-Commerce Platform",
+    type: "Next.js · Node.js · Stripe",
+    role: "Developer",
+    coverImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    link: "https://github.com",
+    additionalImages: [],
+  },
+  {
+    id: "sample-3",
+    title: "AI Chat Dashboard",
+    type: "React · Python · OpenAI",
+    role: "Developer",
+    coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+    link: "https://github.com",
+    additionalImages: [],
+  },
+  {
+    id: "sample-4",
+    title: "Task Management App",
+    type: "React · Firebase · Tailwind",
+    role: "Developer",
+    coverImage: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
+    link: "https://github.com",
+    additionalImages: [],
+  },
+];
+
 export default function LatestProjectWorkSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
   const [canGoPrev, setCanGoPrev] = useState(false);
@@ -32,10 +71,13 @@ export default function LatestProjectWorkSection() {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/projects`, { cache: 'no-store' });
       if (!res.ok) throw new Error("Failed to load");
       const data = await res.json();
-      const developerProjects = data.filter((p: Project) => p.role === "Developer" || !p.role); // Fallback for old data
-      setProjects(developerProjects);
+      const developerProjects = data.filter((p: Project) => p.role === "Developer" || !p.role);
+      // Fall back to sample projects if API returns nothing
+      setProjects(developerProjects.length > 0 ? developerProjects : SAMPLE_PROJECTS);
     } catch (err) {
       console.error(err);
+      // On error, show sample projects
+      setProjects(SAMPLE_PROJECTS);
     } finally {
       setIsLoading(false);
     }
