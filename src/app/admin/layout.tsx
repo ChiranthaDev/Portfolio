@@ -1,14 +1,28 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/admin/Sidebar";
 import Topbar from "../../components/admin/Topbar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
+    const router = useRouter();
     const isLoginPage = pathname === "/admin/login";
+    const [isAuthed, setIsAuthed] = useState(false);
+
+    useEffect(() => {
+        if (!isLoginPage) {
+            const auth = localStorage.getItem("admin_auth");
+            if (auth !== "true") {
+                router.replace("/admin/login");
+            } else {
+                setIsAuthed(true);
+            }
+        }
+    }, [isLoginPage, router]);
 
     if (isLoginPage) {
         return (
@@ -16,6 +30,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 {children}
             </div>
         );
+    }
+
+    if (!isAuthed) {
+        return null; // Show nothing while redirecting
     }
 
     return (

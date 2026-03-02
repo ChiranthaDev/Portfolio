@@ -1,6 +1,16 @@
-import { Bell, Search, User } from "lucide-react";
+"use client";
+
+import { Bell, LogOut, Search, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Topbar() {
+    const router = useRouter();
+
+    const handleLogout = () => {
+        localStorage.removeItem("admin_auth");
+        router.push("/admin/login");
+    };
+
     return (
         <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-neutral-200 bg-white/80 px-8 backdrop-blur-md dark:border-neutral-800 dark:bg-black/80">
             {/* Search Bar */}
@@ -28,6 +38,13 @@ export default function Topbar() {
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800">
                         <User className="h-5 w-5 text-neutral-600 dark:text-neutral-300" />
                     </div>
+                    <button
+                        onClick={handleLogout}
+                        title="Logout"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-red-100 hover:text-[#FF0000] dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+                    >
+                        <LogOut className="h-5 w-5" />
+                    </button>
                 </div>
             </div>
         </header>

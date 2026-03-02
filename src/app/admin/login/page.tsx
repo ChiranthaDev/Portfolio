@@ -1,25 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Lock, Mail } from "lucide-react";
+import { ArrowRight, Lock, Mail, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+const ADMIN_EMAIL = "admin@gmail.com";
+const ADMIN_PASSWORD = "PortChira@022004";
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     const router = useRouter();
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
         setIsLoading(true);
 
-        // Mock authentication delay
         setTimeout(() => {
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                localStorage.setItem("admin_auth", "true");
+                router.push("/admin");
+            } else {
+                setError("Invalid email or password. Please try again.");
+            }
             setIsLoading(false);
-            router.push("/admin");
-        }, 800);
+        }, 600);
     };
 
     return (
@@ -34,12 +43,20 @@ export default function AdminLoginPage() {
                         Welcome back
                     </h2>
                     <p className="mt-2 text-sm text-neutral-500">
-                        Please enter your details to sign in.
+                        Sign in to your admin dashboard.
                     </p>
                 </div>
 
+                {/* Error Message */}
+                {error && (
+                    <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-400">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
+                        {error}
+                    </div>
+                )}
+
                 {/* Form */}
-                <form onSubmit={handleLogin} className="mt-8 space-y-6">
+                <form onSubmit={handleLogin} className="space-y-6">
                     <div className="space-y-4">
                         {/* Email Input */}
                         <div className="space-y-2">
@@ -78,26 +95,6 @@ export default function AdminLoginPage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-neutral-300 text-[#FF0000] focus:ring-[#FF0000] dark:border-neutral-700 dark:bg-neutral-900"
-                            />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-neutral-900 dark:text-neutral-300">
-                                Remember for 30 days
-                            </label>
-                        </div>
-
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-[#FF0000] hover:text-red-500">
-                                Forgot password?
-                            </a>
-                        </div>
-                    </div>
-
                     <button
                         type="submit"
                         disabled={isLoading}
@@ -112,11 +109,6 @@ export default function AdminLoginPage() {
                             </span>
                         )}
                     </button>
-
-                    {/* Mock note */}
-                    <p className="text-center text-xs text-neutral-400 mt-4">
-                        (This is a frontend mock. Any credentials will work.)
-                    </p>
                 </form>
             </div>
         </div>
