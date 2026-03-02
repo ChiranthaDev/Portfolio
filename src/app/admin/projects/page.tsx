@@ -19,7 +19,8 @@ export default function ProjectsAdminPage() {
 
     const fetchProjects = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/projects`, { cache: 'no-store' });
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/projects`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             setProjects(data);
@@ -38,7 +39,8 @@ export default function ProjectsAdminPage() {
         if (!confirm("Are you sure you want to delete this project?")) return;
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/projects/${id}`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            await fetch(`${baseUrl}/api/projects/${id}`, {
                 method: "DELETE",
             });
             setProjects(projects.filter(p => p.id !== id));
