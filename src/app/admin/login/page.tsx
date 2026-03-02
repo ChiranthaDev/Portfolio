@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Lock, Mail, AlertCircle } from "lucide-react";
 import Link from "next/link";
@@ -35,17 +36,11 @@ export default function AdminLoginPage() {
         <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-4 font-poppins dark:bg-[#0a0a0a]">
             <div className="w-full max-w-md space-y-8 rounded-3xl border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-[#111] sm:p-10 fade-in">
                 {/* Header */}
-                <div className="text-center">
-                    <Link href="/" className="inline-block font-oswald text-4xl font-bold tracking-tight text-neutral-900 dark:text-white transition-opacity hover:opacity-80">
-                        CHIRAA<span className="text-[#FF0000]">.</span>
-                    </Link>
-                    <h2 className="mt-6 text-xl font-semibold text-neutral-900 dark:text-white">
-                        Welcome back
-                    </h2>
-                    <p className="mt-2 text-sm text-neutral-500">
-                        Sign in to your admin dashboard.
-                    </p>
-                </div>
+                <div className="flex items-center justify-center">
+                        <Link href="/" aria-label="Admin">
+                            <Image src="/img/logo.png" alt="Logo" width={32} height={42} className="h-16 w-auto" />
+                        </Link>
+                    </div>
 
                 {/* Error Message */}
                 {error && (

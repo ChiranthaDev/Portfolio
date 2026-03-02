@@ -37,24 +37,11 @@ export default function Topbar() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-6">
-                <button className="relative text-neutral-500 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-                    <Bell className="h-6 w-6" />
-                    <span className="absolute right-0 top-0 h-2.5 w-2.5 rounded-full bg-[#FF0000] ring-2 ring-white dark:ring-black"></span>
-                </button>
-
                 <div className="flex items-center gap-3 pl-6 border-l border-neutral-200 dark:border-neutral-800">
-                    <div className="flex flex-col text-right">
-                        <span className="text-sm font-semibold text-neutral-900 dark:text-white">Chiraa</span>
-                        <span className="text-xs text-neutral-500">Super Admin</span>
-                    </div>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800">
-                        <User className="h-5 w-5 text-neutral-600 dark:text-neutral-300" />
-                    </div>
                     <button
                         onClick={handleLogout}
                         title="Logout"
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-red-100 hover:text-[#FF0000] dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-red-950/40 dark:hover:text-red-400"
-                    >
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-red-100 hover:text-[#FF0000] dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-red-950/40 dark:hover:text-red-400">
                         <LogOut className="h-5 w-5" />
                     </button>
                 </div>

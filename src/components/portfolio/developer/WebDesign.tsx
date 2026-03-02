@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const stackProjects = [
-  { title: "Portfolio Website", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
-  { title: "E-Commerce Platform", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" },
-  { title: "AI Chat Dashboard", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" },
-  { title: "Task Manager App", image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80" },
-  { title: "SaaS Landing Page", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" },
-  { title: "Admin Dashboard", image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80" },
-  { title: "Mobile App UI", image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80" }
+  { title: "Portfolio Website", image: "/img/web.png" },
+  { title: "E-Commerce Platform", image: "/img/2b.jpg" },
+  { title: "AI Chat Dashboard", image: "/img/web.png" },
+  { title: "Task Manager App", image: "/img/2b.jpg" },
+  { title: "SaaS Landing Page", image: "/img/web.png" },
+  { title: "Admin Dashboard", image: "/img/2b.jpg" },
+  { title: "Mobile App UI", image: "/img/web.png" }
 ];
 
 export default function WebDesignSection() {

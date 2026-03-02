@@ -102,7 +102,7 @@ export default function AdminDashboard() {
                         Overview
                     </h1>
                     <p className="mt-1 text-sm text-neutral-500">
-                        Welcome back, Chiraa! Here is what&apos;s happening with your portfolio today.
+                        Welcome back, Chiraa!
                     </p>
                 </div>
                 <div className="flex items-center gap-3">

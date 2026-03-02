@@ -62,7 +62,7 @@ export default function BlogsAdminPage() {
                         Blog Posts
                     </h1>
                     <p className="mt-1 text-sm text-neutral-500">
-                        Manage your blog posts, drafts, and categories.
+                        
                     </p>
                 </div>
                 <Link href="/admin/blogs/new" className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800">

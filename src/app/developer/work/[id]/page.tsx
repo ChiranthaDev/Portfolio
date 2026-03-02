@@ -85,7 +85,7 @@ export default function ProjectDetailsPage() {
             <main className="mx-auto max-w-7xl px-6 pb-24 pt-32">
                 <Link
                     href="/developer"
-                    className="inline-flex items-center gap-2 mb-8 text-sm font-medium uppercase tracking-widest text-[#FF0000] hover:text-black transition-colors"
+                    className="inline-flex items-center gap-2 mb-8 text-sm font-medium uppercase tracking-widest text-[black] hover:text-black transition-colors"
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back to Developer

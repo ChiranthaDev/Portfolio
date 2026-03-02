@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80",
     quote:
       "A sharp visual direction, clear communication, and delivery speed that impressed our whole team.",
-    author: "Laura Domenge",
+    author: "Sanjaya Bandara",
     role: "Comedian",
     heading: "Your satisfaction comes first",
     description:
@@ -28,7 +28,7 @@ export const testimonials: Testimonial[] = [
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80",
     quote:
       "From strategy to launch, every detail was handled with precision and creativity.",
-    author: "Maya Laurent",
+    author: "Thilini Perera",
     role: "Brand Manager",
     heading: "Reliable delivery, every sprint",
     description:
@@ -41,7 +41,7 @@ export const testimonials: Testimonial[] = [
     image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80",
     quote:
       "Fast turnaround, excellent quality, and a final product that truly reflected our vision.",
-    author: "Noah Walker",
+    author: "Oshada Vimanshana",
     role: "Startup Founder",
     heading: "Built for long-term growth",
     description:
