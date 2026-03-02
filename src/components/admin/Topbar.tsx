@@ -7,7 +7,7 @@ export default function Topbar() {
     const router = useRouter();
 
     const handleLogout = () => {
-        localStorage.removeItem("admin_auth");
+        sessionStorage.removeItem("admin_auth");
         router.push("/admin/login");
     };
 

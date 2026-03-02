@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         if (!isLoginPage) {
-            const auth = localStorage.getItem("admin_auth");
+            const auth = sessionStorage.getItem("admin_auth");
             if (auth !== "true") {
                 router.replace("/admin/login");
             } else {
