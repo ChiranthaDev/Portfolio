@@ -41,9 +41,8 @@ export default function DeveloperPage() {
       <SplitOverlay />
       <div className="relative w-full bg-white">
         <Navbar
-          className={`z-40 transform transition-transform duration-300 ${
-            showNavbar ? "translate-y-0" : "-translate-y-24"
-          }`}
+          className={`z-40 transform transition-transform duration-300 ${showNavbar ? "translate-y-0" : "-translate-y-24"
+            }`}
         />
 
         <main className="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center px-6 text-center">
@@ -51,8 +50,8 @@ export default function DeveloperPage() {
             * Frontend Developer * Backend Developer * AI Learner
           </div>
 
-          <h1 className="mt-6 font-oswald text-7xl font-extrabold leading-[0.92] text-neutral-900">
-            Building scalable software<br/> &amp; clean digital experiences.
+          <h1 className="mt-6 font-oswald text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[0.92] text-neutral-900">
+            Building scalable software<br /> &amp; clean digital experiences.
           </h1>
 
           <div className="mt-8 flex items-center gap-4">

@@ -86,7 +86,7 @@ export default function Home() {
                     transition: { duration: 0 }
                   }
                 }}
-                className="text-[clamp(76px,13.5vw,180px)] font-extrabold leading-[0.92] dark:text-white"
+                className="text-[clamp(48px,12vw,180px)] font-extrabold leading-[0.92] dark:text-white"
               >
                 Developer
               </motion.h1>
@@ -114,7 +114,7 @@ export default function Home() {
                     transition: { duration: 0 }
                   }
                 }}
-                className="relative z-0 whitespace-nowrap text-[clamp(48px,9.5vw,120px)] font-extrabold leading-[0.98]"
+                className="relative z-0 whitespace-nowrap text-[clamp(28px,8vw,120px)] font-extrabold leading-[0.98]"
               >
                 &amp; Graphic Designer
               </motion.h2>
@@ -145,10 +145,10 @@ export default function Home() {
         <motion.div
           variants={fadeUp}
           custom={4}
-          className="absolute inset-x-0 bottom-48 flex items-center justify-between px-0 text-sm text-neutral-500 dark:text-neutral-400"
+          className="absolute inset-x-0 bottom-40 md:bottom-48 flex flex-col md:flex-row items-center justify-between px-4 text-sm text-neutral-500 dark:text-neutral-400 gap-4 md:gap-0"
         >
-          <span className="ml-0"><span className="text-white">.....................................</span>based in Colombo, Sri Lanka.</span>
-          <div className="mr-2 flex items-center gap-6 text-xs uppercase tracking-[0.2em] text-neutral-400">
+          <span className="text-center md:text-left"><span className="text-white hidden md:inline">.....................................</span>based in Colombo, Sri Lanka.</span>
+          <div className="flex items-center justify-center gap-4 md:gap-6 text-xs uppercase tracking-[0.2em] text-neutral-400 flex-wrap">
             <div className="flex items-center gap-2">
               <Image
                 src="/img/logo.png"

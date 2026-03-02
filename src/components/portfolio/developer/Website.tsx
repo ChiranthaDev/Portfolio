@@ -2,8 +2,8 @@
 
 export default function DeveloperWebsiteSection() {
   return (
-    
-    <section className="bg-white px-10 py-12">
+
+    <section className="bg-white px-5 md:px-10 py-12">
       <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[1.05fr_1fr] lg:items-center">
         <div className="space-y-6">
           <div>
@@ -31,7 +31,7 @@ export default function DeveloperWebsiteSection() {
 
         <div className="relative">
           <div className="bg-white">
-            <div className="relative h-[680px] w-full md:h-[460px]">
+            <div className="relative h-[400px] w-full md:h-[460px] lg:h-[680px]">
               <Image
                 src="/img/website.png"
                 alt="Website showcase"

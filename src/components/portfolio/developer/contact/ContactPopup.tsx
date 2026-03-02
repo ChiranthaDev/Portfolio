@@ -88,11 +88,10 @@ export default function ContactPopup({ isOpen, onClose }: ContactPopupProps) {
                 key={method}
                 type="button"
                 onClick={() => setSelectedMethod(method)}
-                className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
-                  isSelected
+                className={`flex w-full flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl border px-4 py-3 text-left transition gap-1 sm:gap-0 ${isSelected
                     ? "border-black bg-neutral-100 shadow-[0_8px_18px_-12px_rgba(0,0,0,0.4)]"
                     : "border-neutral-300 bg-white hover:border-black/60"
-                }`}
+                  }`}
               >
                 <span className="text-base font-semibold text-black">{methodData.label}</span>
                 <span className="text-sm text-neutral-600">{methodData.detail}</span>

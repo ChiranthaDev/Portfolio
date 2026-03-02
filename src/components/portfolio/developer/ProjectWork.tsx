@@ -149,7 +149,7 @@ export default function LatestProjectWorkSection() {
           <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[red]">
             Latest Projects
           </p>
-          <h2 className="mt-3 font-oswald font-extrabold leading-[0.92] text-[clamp(52px,8vw,96px)] leading-[0.96] text-black">My Works</h2>
+          <h2 className="mt-3 font-oswald font-extrabold leading-[0.92] text-[clamp(36px,8vw,96px)] leading-[0.96] text-black">My Works</h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-neutral-700">
             Witness the beauty of crafted digital products as we showcase clean interfaces,
             strong UX thinking, and performance-focused engineering.
@@ -194,7 +194,7 @@ export default function LatestProjectWorkSection() {
                 <div className="flex w-max items-end gap-5 pb-2">
                   {projects.map((project, index) => (
                     <Link href={`/developer/work/${project.id}`} key={project.id}>
-                      <article className="group relative h-[520px] w-[380px] shrink-0 overflow-hidden rounded-[38px] cursor-pointer bg-neutral-100">
+                      <article className="group relative h-[520px] w-[85vw] sm:w-[380px] shrink-0 overflow-hidden rounded-[38px] cursor-pointer bg-neutral-100">
                         {project.coverImage && (
                           <Image
                             src={project.coverImage}

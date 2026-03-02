@@ -51,7 +51,7 @@ export default function WebDesignSection() {
           <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[red]">
             Web Design
           </p>
-          <h2 className="mt-4 font-oswald text-[clamp(46px,2.5vw,56px)] font-bold leading-[1.08] text-[#16181d]">
+          <h2 className="mt-4 font-oswald text-[clamp(32px,2.5vw,56px)] font-bold leading-[1.08] text-[#16181d]">
             Custom websites, high-performing results and easy-to-manage backoffice
           </h2>
           <p className="mt-6 text-[clamp(15px,1.05vw,24px)] leading-[1.6] text-[#292d33]">
@@ -64,7 +64,7 @@ export default function WebDesignSection() {
           </p>
         </div>
 
-        <div className="relative mx-auto h-[105mm] w-[105mm]">
+        <div className="relative mx-auto h-[80vw] w-[80vw] sm:h-[105mm] sm:w-[105mm]">
           {stackProjects.map((project, index) => {
             const distance = index - activePosition;
             const absDistance = Math.abs(distance);
