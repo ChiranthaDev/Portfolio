@@ -14,7 +14,10 @@ interface Project {
     title: string;
     type: string;
     role: string;
+    year: string;
+    description: string;
     coverImage: string;
+    mainImage: string;
     additionalImages?: string[];
     link?: string;
 }
@@ -93,7 +96,7 @@ export default function ProjectDetailsPage() {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-oswald text-6xl uppercase leading-none tracking-tight text-black md:text-8xl"
+                        className="font-oswald text-5xl uppercase leading-none tracking-tight text-black md:text-8xl"
                     >
                         {project.title}
                     </motion.h1>
@@ -112,6 +115,12 @@ export default function ProjectDetailsPage() {
                             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF0000]">Type</p>
                             <p className="mt-2 text-sm font-medium text-neutral-800">{project.type}</p>
                         </div>
+                        {project.year && (
+                            <div>
+                                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF0000]">Year</p>
+                                <p className="mt-2 text-sm font-medium text-neutral-800">{project.year}</p>
+                            </div>
+                        )}
                         {project.link && (
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF0000]">Live Site</p>
@@ -123,16 +132,16 @@ export default function ProjectDetailsPage() {
                     </motion.div>
                 </div>
 
-                {/* Main Cover Image */}
+                {/* Main Image (16:9 Hero) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
-                    className="relative mb-24 aspect-video w-full overflow-hidden rounded-[40px] bg-neutral-100"
+                    className="relative mb-16 aspect-video w-full overflow-hidden rounded-[40px] bg-neutral-100"
                 >
-                    {project.coverImage && (
+                    {(project.mainImage || project.coverImage) && (
                         <Image
-                            src={project.coverImage}
+                            src={project.mainImage || project.coverImage}
                             alt={`${project.title} visualization`}
                             fill
                             className="object-cover"
@@ -140,6 +149,19 @@ export default function ProjectDetailsPage() {
                         />
                     )}
                 </motion.div>
+
+                {/* Description */}
+                {project.description && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mb-24 max-w-4xl max-w-3xl"
+                    >
+                        <h2 className="font-oswald text-4xl uppercase tracking-tight text-black mb-6">About the project</h2>
+                        <p className="text-lg leading-relaxed text-neutral-700 whitespace-pre-wrap">{project.description}</p>
+                    </motion.div>
+                )}
 
                 {/* Additional Images Grid */}
                 {project.additionalImages && project.additionalImages.length > 0 && (

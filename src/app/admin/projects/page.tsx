@@ -5,10 +5,13 @@ import { FolderHeart, Plus, Search, Settings2, Edit, Trash2, Loader2 } from "luc
 import Link from "next/link";
 
 interface Project {
-    id: string; // From R2 JSON
+    id: string;
     title: string;
     type: string;
     role: string;
+    year: string;
+    category: string;
+    description: string;
     status: string;
     date: string;
 }
@@ -94,27 +97,29 @@ export default function ProjectsAdminPage() {
                             <p>No projects found. Add your first one!</p>
                         </div>
                     ) : (
-                        <table className="w-full text-left text-sm text-neutral-500 dark:text-neutral-400">
+                        <table className="w-full text-left text-sm text-neutral-500 dark:text-neutral-400 min-w-[600px]">
                             <thead className="border-b border-neutral-200 bg-neutral-50/50 text-xs uppercase text-neutral-700 dark:border-neutral-800 dark:bg-black/50 dark:text-neutral-300">
                                 <tr>
                                     <th className="px-6 py-4 font-medium">Project Name</th>
-                                    <th className="px-6 py-4 font-medium">Type</th>
-                                    <th className="px-6 py-4 font-medium">Portfolio Role</th>
+                                    <th className="px-6 py-4 font-medium">Domain / Type</th>
+                                    <th className="px-6 py-4 font-medium">Role</th>
                                     <th className="px-6 py-4 font-medium text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
                                 {projects.map((project) => (
                                     <tr key={project.id} className="transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900/50">
-                                        <td className="px-6 py-4 font-medium text-neutral-900 dark:text-white flex items-center gap-3">
-                                            <div className="flex h-8 w-8 items-center justify-center rounded bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
+                                        <td className="px-6 py-4 font-medium text-neutral-900 dark:text-white flex items-center gap-3 w-[250px]">
+                                            <div className="flex h-8 w-8 items-center justify-center rounded bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 flex-shrink-0">
                                                 <FolderHeart className="h-4 w-4" />
                                             </div>
-                                            {project.title}
+                                            <span className="truncate">{project.title}</span>
                                         </td>
-                                        <td className="px-6 py-4">{project.type}</td>
                                         <td className="px-6 py-4">
-                                            <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${project.role === 'Developer'
+                                            {project.role === "Developer" ? project.type : project.category}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold whitespace-nowrap ${project.role === 'Developer'
                                                 ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400'
                                                 : 'bg-purple-50 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
                                                 }`}>

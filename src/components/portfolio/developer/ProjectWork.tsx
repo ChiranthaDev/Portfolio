@@ -10,7 +10,10 @@ interface Project {
   title: string;
   type: string;
   role: string;
+  year: string;
+  description: string;
   coverImage: string;
+  mainImage: string;
   additionalImages?: string[];
   link?: string;
 }
@@ -25,7 +28,10 @@ const SAMPLE_PROJECTS: Project[] = [
     title: "Chiraa Portfolio",
     type: "Full-Stack Web App",
     role: "Developer",
+    year: "2024",
+    description: "A comprehensive developer and designer portfolio built with modern web technologies.",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    mainImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     link: "https://github.com",
     additionalImages: [],
   },
@@ -34,7 +40,10 @@ const SAMPLE_PROJECTS: Project[] = [
     title: "E-Commerce Platform",
     type: "Next.js · Node.js · Stripe",
     role: "Developer",
+    year: "2023",
+    description: "A fully functional e-commerce platform with stripe integration.",
     coverImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    mainImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
     link: "https://github.com",
     additionalImages: [],
   },
@@ -43,7 +52,10 @@ const SAMPLE_PROJECTS: Project[] = [
     title: "AI Chat Dashboard",
     type: "React · Python · OpenAI",
     role: "Developer",
+    year: "2023",
+    description: "An AI chat application offering insights and analytical dashboards.",
     coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+    mainImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
     link: "https://github.com",
     additionalImages: [],
   },
@@ -52,7 +64,10 @@ const SAMPLE_PROJECTS: Project[] = [
     title: "Task Management App",
     type: "React · Firebase · Tailwind",
     role: "Developer",
+    year: "2022",
+    description: "A robust task management tool for agile teams built using Firebase for real-time synchronization.",
     coverImage: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
+    mainImage: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
     link: "https://github.com",
     additionalImages: [],
   },
