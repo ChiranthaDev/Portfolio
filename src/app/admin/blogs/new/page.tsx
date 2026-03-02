@@ -20,7 +20,8 @@ export default function NewBlogPostPage() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
+        const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/upload`, {
             method: 'POST',
             body: formData,
         });
@@ -48,11 +49,12 @@ export default function NewBlogPostPage() {
                 title,
                 category,
                 linkedinLink,
-                coverImage: coverImageUrl,
                 status: saveStatus,
+                coverImage: coverImageUrl,
             };
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/blogs`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(blogData)

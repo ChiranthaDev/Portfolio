@@ -19,7 +19,8 @@ export default function NewVideoPage() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
+        const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/upload`, {
             method: 'POST',
             body: formData,
         });
@@ -48,7 +49,8 @@ export default function NewVideoPage() {
                 thumbnail: thumbnailUrl,
             };
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/videos`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/videos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(videoData)

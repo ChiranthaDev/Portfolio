@@ -30,7 +30,8 @@ export default function NewProjectPage() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
+        const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/upload`, {
             method: 'POST',
             body: formData,
         });
@@ -72,7 +73,8 @@ export default function NewProjectPage() {
                 additionalImages: additionalUrls,
             };
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/projects`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/projects`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(projectData)
