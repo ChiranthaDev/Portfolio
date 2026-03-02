@@ -28,7 +28,8 @@ export default function BlogPostPage() {
 
     const fetchPost = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, { cache: 'no-store' });
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/blogs`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             const foundPost = data.find((p: BlogPost) => String(p.id) === postId);

@@ -22,7 +22,8 @@ export default function BlogsAdminPage() {
 
     const fetchBlogs = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, { cache: 'no-store' });
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/blogs`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             setBlogs(data);
@@ -41,7 +42,8 @@ export default function BlogsAdminPage() {
         if (!confirm("Are you sure you want to delete this blog post?")) return;
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs/${id}`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            await fetch(`${baseUrl}/api/blogs/${id}`, {
                 method: "DELETE",
             });
             setBlogs(blogs.filter(b => b.id !== id));

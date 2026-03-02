@@ -33,9 +33,10 @@ export default function BlogPage() {
 
     const fetchData = async () => {
         try {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
             const [blogsRes, videosRes] = await Promise.all([
-                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/blogs`, { cache: 'no-store' }),
-                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/videos`, { cache: 'no-store' })
+                fetch(`${baseUrl}/api/blogs`, { cache: 'no-store' }),
+                fetch(`${baseUrl}/api/videos`, { cache: 'no-store' })
             ]);
 
             if (blogsRes.ok) {

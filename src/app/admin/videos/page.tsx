@@ -21,7 +21,8 @@ export default function VideosAdminPage() {
 
     const fetchVideos = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/videos`, { cache: 'no-store' });
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/videos`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             setVideos(data);
@@ -40,7 +41,8 @@ export default function VideosAdminPage() {
         if (!confirm("Are you sure you want to delete this video?")) return;
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/videos/${id}`, {
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            await fetch(`${baseUrl}/api/videos/${id}`, {
                 method: "DELETE",
             });
             setVideos(videos.filter(v => v.id !== id));

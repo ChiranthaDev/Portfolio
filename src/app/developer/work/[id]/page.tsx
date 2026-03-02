@@ -28,7 +28,8 @@ export default function ProjectDetailsPage() {
 
     const fetchProject = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/projects`, { cache: 'no-store' });
+            const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, "");
+            const res = await fetch(`${baseUrl}/api/projects`, { cache: 'no-store' });
             if (!res.ok) throw new Error("Failed to load");
             const data = await res.json();
             // Find the specific project by ID
