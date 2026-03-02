@@ -12,7 +12,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    image: "/img/Project/1.png",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80",
     quote:
       "A sharp visual direction, clear communication, and delivery speed that impressed our whole team.",
     author: "Laura Domenge",
@@ -25,7 +25,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    image: "/img/Project/3.png",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80",
     quote:
       "From strategy to launch, every detail was handled with precision and creativity.",
     author: "Maya Laurent",
@@ -38,7 +38,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 3,
-    image: "/img/Project/5.png",
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80",
     quote:
       "Fast turnaround, excellent quality, and a final product that truly reflected our vision.",
     author: "Noah Walker",
