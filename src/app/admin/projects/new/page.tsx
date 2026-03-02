@@ -11,29 +11,26 @@ export default function NewProjectPage() {
     // Tab State
     const [activeTab, setActiveTab] = useState<"Developer" | "Designer">("Developer");
 
-    // Shared / Base States
-    const [title, setTitle] = useState("");
-
     // Developer States
+    const [devTitle, setDevTitle] = useState("");
     const [type, setType] = useState("");
     const [year, setYear] = useState("");
     const [link, setLink] = useState("");
     const [description, setDescription] = useState("");
-
-    // Designer States
-    const [category, setCategory] = useState("");
-
-    // File states - shared
-    const [coverFile, setCoverFile] = useState<File | null>(null);
-
-    // File states - Developer only
+    const [devCoverFile, setDevCoverFile] = useState<File | null>(null);
     const [mainImageFile, setMainImageFile] = useState<File | null>(null);
     const [additionalFiles, setAdditionalFiles] = useState<(File | null)[]>([null, null, null]);
+    const devCoverInputRef = useRef<HTMLInputElement>(null);
+
+    // Designer States
+    const [designerTitle, setDesignerTitle] = useState("");
+    const [category, setCategory] = useState("");
+    const [designerCoverFile, setDesignerCoverFile] = useState<File | null>(null);
+    const designerCoverInputRef = useRef<HTMLInputElement>(null);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Refs for hidden file inputs
-    const coverInputRef = useRef<HTMLInputElement>(null);
     const mainImageRef = useRef<HTMLInputElement>(null);
     const additionalInputRefs = [
         useRef<HTMLInputElement>(null),
@@ -61,9 +58,9 @@ export default function NewProjectPage() {
 
         // Basic validation
         if (activeTab === "Developer") {
-            if (!title || !type || !year || !description) return alert("Please fill title, type, year, and description");
+            if (!devTitle || !type || !year || !description) return alert("Please fill title, type, year, and description");
         } else {
-            if (!title || !category) return alert("Please fill item name and category");
+            if (!designerTitle || !category) return alert("Please fill item name and category");
         }
 
         setIsSubmitting(true);
@@ -73,8 +70,10 @@ export default function NewProjectPage() {
             let additionalUrls: string[] = [];
 
             // 1. Upload Cover/Square Image if exists
-            if (coverFile) {
-                coverImageUrl = await uploadImage(coverFile);
+            if (activeTab === "Developer" && devCoverFile) {
+                coverImageUrl = await uploadImage(devCoverFile);
+            } else if (activeTab === "Designer" && designerCoverFile) {
+                coverImageUrl = await uploadImage(designerCoverFile);
             }
 
             // 2. Upload Main Image (Developer)
@@ -94,7 +93,7 @@ export default function NewProjectPage() {
 
             // 4. Save Project Data
             const projectData = {
-                title: title,
+                title: activeTab === "Developer" ? devTitle : designerTitle,
                 role: activeTab === "Developer" ? "Developer" : "UI/UX Designer",
                 type: activeTab === "Developer" ? type : "",
                 year: activeTab === "Developer" ? year : "",
@@ -113,23 +112,29 @@ export default function NewProjectPage() {
                 body: JSON.stringify(projectData)
             });
 
-            if (!res.ok) throw new Error("Failed to save project");
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.details || errData.error || "Failed to save project");
+            }
 
+            router.refresh(); // Force page refresh
             router.push('/admin/projects');
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            alert("An error occurred while saving.");
+            alert("An error occurred while saving: " + (err.message || String(err)));
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: "cover" | "main" | number) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: "devCover" | "designerCover" | "main" | number) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        if (target === "cover") {
-            setCoverFile(file);
+        if (target === "devCover") {
+            setDevCoverFile(file);
+        } else if (target === "designerCover") {
+            setDesignerCoverFile(file);
         } else if (target === "main") {
             setMainImageFile(file);
         } else if (typeof target === "number") {
@@ -197,8 +202,8 @@ export default function NewProjectPage() {
                                     <label className="text-sm font-semibold text-neutral-900 dark:text-white">Project Title</label>
                                     <input
                                         type="text"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
+                                        value={devTitle}
+                                        onChange={(e) => setDevTitle(e.target.value)}
                                         placeholder="e.g. Enterprise CRM System"
                                         className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-[#FF0000] focus:outline-none focus:ring-1 focus:ring-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:focus:border-[#FF0000]"
                                         required
@@ -269,16 +274,16 @@ export default function NewProjectPage() {
                                         type="file"
                                         accept="image/*"
                                         className="hidden"
-                                        ref={coverInputRef}
-                                        onChange={(e) => handleFileChange(e, "cover")}
+                                        ref={devCoverInputRef}
+                                        onChange={(e) => handleFileChange(e, "devCover")}
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => coverInputRef.current?.click()}
+                                        onClick={() => devCoverInputRef.current?.click()}
                                         className="flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-10 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10"
                                     >
-                                        {coverFile ? (
-                                            <span className="text-[#FF0000] font-semibold">{coverFile.name} (Ready)</span>
+                                        {devCoverFile ? (
+                                            <span className="text-[#FF0000] font-semibold">{devCoverFile.name} (Ready)</span>
                                         ) : (
                                             <>
                                                 <ImageIcon className="h-8 w-8 text-neutral-400" />
@@ -364,8 +369,8 @@ export default function NewProjectPage() {
                                     <label className="text-sm font-semibold text-neutral-900 dark:text-white">Item Name</label>
                                     <input
                                         type="text"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
+                                        value={designerTitle}
+                                        onChange={(e) => setDesignerTitle(e.target.value)}
                                         placeholder="e.g. Minimalist UI Kit"
                                         className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-[#FF0000] focus:outline-none focus:ring-1 focus:ring-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:focus:border-[#FF0000]"
                                         required
@@ -394,16 +399,16 @@ export default function NewProjectPage() {
                                         type="file"
                                         accept="image/*"
                                         className="hidden"
-                                        ref={coverInputRef}
-                                        onChange={(e) => handleFileChange(e, "cover")}
+                                        ref={designerCoverInputRef}
+                                        onChange={(e) => handleFileChange(e, "designerCover")}
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => coverInputRef.current?.click()}
+                                        onClick={() => designerCoverInputRef.current?.click()}
                                         className="flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-neutral-200 bg-neutral-50 py-16 text-sm font-medium text-neutral-500 transition-colors hover:border-[#FF0000] hover:bg-red-50 hover:text-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-[#FF0000] dark:hover:bg-red-500/10"
                                     >
-                                        {coverFile ? (
-                                            <span className="text-[#FF0000] font-semibold">{coverFile.name} (Ready)</span>
+                                        {designerCoverFile ? (
+                                            <span className="text-[#FF0000] font-semibold">{designerCoverFile.name} (Ready)</span>
                                         ) : (
                                             <>
                                                 <ImageIcon className="h-10 w-10 text-neutral-400" />
