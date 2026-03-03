@@ -27,7 +27,9 @@ export default function DesignerPage() {
       const data = await res.json();
 
       // Filter for UI/UX Designer role
-      const designerProjects = data.filter((p: any) => p.role === "UI/UX Designer" || p.role === "Designer");
+      const designerProjects = data
+        .filter((p: any) => p.role === "UI/UX Designer" || p.role === "Designer")
+        .reverse();
       setProjects(designerProjects);
     } catch (err) {
       console.error(err);
