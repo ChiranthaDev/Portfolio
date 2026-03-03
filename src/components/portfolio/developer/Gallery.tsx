@@ -349,12 +349,12 @@ class App {
 
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const defaultItems = [
-      { image: "https://picsum.photos/seed/1/800/600?grayscale", text: "Bridge" },
-      { image: "https://picsum.photos/seed/2/800/600?grayscale", text: "Desk Setup" },
-      { image: "https://picsum.photos/seed/3/800/600?grayscale", text: "Waterfall" },
-      { image: "https://picsum.photos/seed/4/800/600?grayscale", text: "Strawberries" },
-      { image: "https://picsum.photos/seed/5/800/600?grayscale", text: "Deep Diving" },
-      { image: "https://picsum.photos/seed/12/800/600?grayscale", text: "Palm Trees" }
+      { image: "./img/1.png", text: "card 1" },
+      { image: "./img/2.png", text: "card 2" },
+      { image: "./img/3.png", text: "card 3" },
+      { image: "./img/4.png", text: "card 4" },
+      { image: "./img/5.png", text: "card 5" },
+      { image: "./img/6.png", text: "card 6" }
     ];
 
     const galleryItems = items && items.length ? items : defaultItems;
