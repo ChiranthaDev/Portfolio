@@ -4,13 +4,12 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const stackProjects = [
-  { title: "Portfolio Website", image: "/img/web.png" },
-  { title: "E-Commerce Platform", image: "/img/2b.jpg" },
-  { title: "AI Chat Dashboard", image: "/img/web.png" },
-  { title: "Task Manager App", image: "/img/2b.jpg" },
-  { title: "SaaS Landing Page", image: "/img/web.png" },
-  { title: "Admin Dashboard", image: "/img/2b.jpg" },
-  { title: "Mobile App UI", image: "/img/web.png" }
+  { title: "Portfolio Website", image: "/img/1.png" },
+  { title: "E-Commerce Platform", image: "/img/2.png" },
+  { title: "AI Chat Dashboard", image: "/img/3.png" },
+  { title: "Task Manager App", image: "/img/4.png" },
+  { title: "SaaS Landing Page", image: "/img/5.png" },
+  { title: "Mobile App UI", image: "/img/6.png" }
 ];
 
 export default function WebDesignSection() {
@@ -43,7 +42,7 @@ export default function WebDesignSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-white px-4 sm:px-6"
+      className="bg-white px-4 sm:px-6 relative z-10 mb-32 lg:mb-48"
       style={{ height: `${stackProjects.length * 50}vh` }}
     >
       <div className="sticky top-16 mx-auto grid h-screen w-full max-w-6xl items-center gap-10 py-16 lg:grid-cols-[1.05fr_0.95fr]">

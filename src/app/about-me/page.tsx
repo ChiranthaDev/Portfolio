@@ -98,8 +98,8 @@ export default function AboutMePage() {
             </h2>
 
             <div ref={containerRef} className="mt-8 grid gap-6 relative">
-              {/* Animated Center Line (Desktop Only) */}
-              <div className="absolute left-1/2 top-0 bottom-0 hidden w-px -translate-x-1/2 bg-[#a5aabc]/30 md:block">
+              {/* Animated Center Line */}
+              <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px md:-translate-x-1/2 bg-[#a5aabc]/30">
                 <motion.div
                   className="w-full bg-[red] origin-top"
                   style={{ scaleY: pathLength, height: '100%' }}
@@ -113,14 +113,14 @@ export default function AboutMePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="grid items-center gap-4 md:grid-cols-[1fr_auto_1fr] relative z-10"
+                  className="grid items-center gap-4 pl-12 md:pl-0 md:grid-cols-[1fr_auto_1fr] relative z-10"
                 >
                   <div className="md:text-right bg-white dark:bg-neutral-900 p-4 rounded-2xl shadow-sm border border-[#e9ebf1] dark:border-neutral-800 transition-colors duration-300">
                     <div className="text-2xl font-semibold dark:text-white">{item.company}</div>
                     <p className="text-xs text-[#6d7383]">{item.period}</p>
                   </div>
 
-                  <div className="mx-auto hidden h-full min-h-[58px] w-10 items-center justify-center md:flex relative">
+                  <div className="absolute left-[4px] top-6 md:static md:mx-auto flex h-full min-h-[58px] w-10 md:items-center md:justify-center">
                     <motion.div
                       className="h-4 w-4 rounded-full bg-white dark:bg-black border-2 border-[red] z-20"
                       initial={{ backgroundColor: "rgb(255, 255, 255)" }}
@@ -140,7 +140,7 @@ export default function AboutMePage() {
           </section>
 
           <section className="mt-10 grid gap-6 rounded-[26px] border border-[#e9ebf1] dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 md:grid-cols-[0.9fr_1.1fr] md:items-center transition-colors duration-300">
-            <div className="relative mx-auto w-full max-w-[280px]">
+            <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[280px]">
               <div className="absolute bottom-0 left-1/2 h-[170px] w-[210px] -translate-x-1/2 rounded-t-[120px]" />
               <Image
                 src="/img/picj.png"
@@ -152,7 +152,7 @@ export default function AboutMePage() {
             </div>
 
             <div>
-              <h2 className="font-oswald text-5xl font-semibold leading-none dark:text-white">
+              <h2 className="font-oswald text-4xl sm:text-5xl font-semibold leading-none dark:text-white">
                 Why <span className="text-[red]">Hire me?</span>
               </h2>
               <p className="mt-4 max-w-md text-semibold text-[#545e72] dark:text-neutral-400">
@@ -173,16 +173,15 @@ export default function AboutMePage() {
             </div>
           </section>
 
-          <section className="mt-10">
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <h2 className="font-oswald text-5xl font-semibold leading-tight dark:text-white">
-                Lets have a look at<br /><span className="text-white dark:text-black">......</span>my <span className="text-[red]">Portfolio<br /></span>
-              </h2>
-            </div>
+          <section className="mt-10 overflow-hidden px-4 text-center">
+            <h2 className="font-oswald text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight dark:text-white">
+              Lets have a look at <br className="hidden sm:block" />
+              <span className="inline-block mt-2 sm:mt-0 sm:ml-12">my <span className="text-[red]">Portfolio</span></span>
+            </h2>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 px-6 py-8">
-              <Link href="/developer" className="rounded-lg border border-neutral-900 bg-black dark:border-white dark:bg-white dark:text-black px-6 py-3 text-sm text-white shadow-sm transition hover:bg-neutral-800">You need a developer</Link>
-              <Link href="/designer" className="rounded-lg border border-neutral-900 bg-black dark:border-white dark:bg-white dark:text-black px-6 py-3 text-sm text-white shadow-sm transition hover:bg-neutral-800">You need a designer</Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 px-6 py-8">
+              <Link href="/developer" className="w-full sm:w-auto text-center rounded-lg border border-neutral-900 bg-black dark:border-white dark:bg-white dark:text-black px-6 py-3 text-sm text-white shadow-sm transition hover:bg-neutral-800">You need a developer</Link>
+              <Link href="/designer" className="w-full sm:w-auto text-center rounded-lg border border-neutral-900 bg-black dark:border-white dark:bg-white dark:text-black px-6 py-3 text-sm text-white shadow-sm transition hover:bg-neutral-800">You need a designer</Link>
             </div>
           </section>
 

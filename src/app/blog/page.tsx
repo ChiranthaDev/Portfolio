@@ -11,7 +11,6 @@ import { Loader2 } from "lucide-react";
 interface BlogPost {
     id: string;
     title: string;
-    category: string;
     linkedinLink: string;
     coverImage: string;
     status: string;
@@ -130,7 +129,7 @@ export default function BlogPage() {
                                             )}
                                         </div>
                                         <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-wider text-[#FF0000] mb-3">
-                                            <span>{post.category}</span>
+                                            <span>Article</span>
                                             <span className="text-neutral-300">•</span>
                                             <span className="text-neutral-500">Read on LinkedIn</span>
                                         </div>

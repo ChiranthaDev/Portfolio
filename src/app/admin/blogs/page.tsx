@@ -8,7 +8,6 @@ import Image from "next/image";
 interface BlogPost {
     id: string;
     title: string;
-    category: string;
     linkedinLink: string;
     coverImage: string;
     status: string;
@@ -62,7 +61,7 @@ export default function BlogsAdminPage() {
                         Blog Posts
                     </h1>
                     <p className="mt-1 text-sm text-neutral-500">
-                        
+
                     </p>
                 </div>
                 <Link href="/admin/blogs/new" className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800">
@@ -101,7 +100,6 @@ export default function BlogsAdminPage() {
                             <thead className="border-b border-neutral-200 bg-neutral-50/50 text-xs uppercase text-neutral-700 dark:border-neutral-800 dark:bg-black/50 dark:text-neutral-300">
                                 <tr>
                                     <th className="px-6 py-4 font-medium">Post Title</th>
-                                    <th className="px-6 py-4 font-medium">Category</th>
                                     <th className="px-6 py-4 font-medium">Status</th>
                                     <th className="px-6 py-4 font-medium">Date</th>
                                     <th className="px-6 py-4 font-medium text-right">Actions</th>
@@ -125,7 +123,6 @@ export default function BlogsAdminPage() {
                                                 <div className="text-xs font-normal text-neutral-500 truncate w-48"><a href={post.linkedinLink} target="_blank" rel="noreferrer" className="hover:underline hover:text-blue-500">{post.linkedinLink}</a></div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">{post.category}</td>
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${post.status === 'Published'
                                                 ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400'

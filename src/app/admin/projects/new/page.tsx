@@ -94,7 +94,7 @@ export default function NewProjectPage() {
             // 4. Save Project Data
             const projectData = {
                 title: activeTab === "Developer" ? devTitle : designerTitle,
-                role: activeTab === "Developer" ? "Developer" : "UI/UX Designer",
+                role: activeTab === "Developer" ? "Developer" : "Designer",
                 type: activeTab === "Developer" ? type : "",
                 year: activeTab === "Developer" ? year : "",
                 description: activeTab === "Developer" ? description : "",

@@ -4,7 +4,7 @@ import ContactPopupTrigger from "./contact/ContactPopupTrigger";
 
 export default function MeetingCtaSection() {
   return (
-    <section className="relative left-1/2 mt-20 isolate w-screen -translate-x-1/2 overflow-hidden sm:mt-24 lg:mt-28">
+    <section className="relative left-1/2 mt-32 isolate w-screen -translate-x-1/2 overflow-hidden sm:mt-40 lg:mt-48">
       <div className="relative min-h-[72vh] w-full">
         <Image
           src="/img/3b.jpg"

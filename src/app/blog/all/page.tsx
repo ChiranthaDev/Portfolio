@@ -10,7 +10,6 @@ import Navbar from "../../../components/Navbar";
 interface BlogPost {
     id: string;
     title: string;
-    category: string;
     linkedinLink: string;
     coverImage: string;
     status: string;
@@ -42,8 +41,7 @@ export default function BlogArchivePage() {
     }, []);
 
     const filteredPosts = blogPosts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchQuery.toLowerCase())
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     // Helper to format date if needed, fallback for mock UI
@@ -148,7 +146,7 @@ export default function BlogArchivePage() {
                                                 )}
                                             </div>
                                             <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-wider text-[#FF0000] mb-3">
-                                                <span>{post.category}</span>
+                                                <span>Article</span>
                                             </div>
                                             <h3 className="font-oswald text-2xl font-bold leading-snug text-neutral-900 dark:text-white transition-colors group-hover:text-neutral-600 dark:group-hover:text-neutral-300 mb-2 flex-grow">
                                                 {post.title}

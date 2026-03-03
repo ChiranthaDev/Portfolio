@@ -37,7 +37,7 @@ export default function DeveloperPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white px-6 pt-8 pb-0">
+    <div className="min-h-screen bg-white px-6 pt-8 pb-0 overflow-x-clip">
       <SplitOverlay />
       <div className="relative w-full bg-white">
         <Navbar

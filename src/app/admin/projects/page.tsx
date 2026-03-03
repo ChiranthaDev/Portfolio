@@ -62,7 +62,7 @@ export default function ProjectsAdminPage() {
                         Projects
                     </h1>
                     <p className="mt-1 text-sm text-neutral-500">
-                        
+
                     </p>
                 </div>
                 <Link href="/admin/projects/new" className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:bg-black dark:hover:bg-neutral-800">
@@ -123,7 +123,7 @@ export default function ProjectsAdminPage() {
                                                 ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400'
                                                 : 'bg-purple-50 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
                                                 }`}>
-                                                {project.role}
+                                                {project.role === 'UI/UX Designer' ? 'Designer' : project.role}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-right">

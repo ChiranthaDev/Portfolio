@@ -12,7 +12,6 @@ import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 interface BlogPost {
     id: string;
     title: string;
-    category: string;
     linkedinLink: string;
     coverImage: string;
     status: string;
@@ -104,7 +103,7 @@ export default function BlogPostPage() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="mb-6 inline-flex rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FF0000] shadow-sm"
                     >
-                        {post.category}
+                        Article
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}

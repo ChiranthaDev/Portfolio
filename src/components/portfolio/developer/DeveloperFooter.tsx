@@ -33,11 +33,11 @@ export default function DeveloperFooter() {
             className="object-contain object-bottom"
           />
         </div>
-        
 
-        <div className="mt-8 grid gap-8 text-left text-[#f7ccda] sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-8 text-left text-[#f7ccda]">
           <div>
-            <p className="font-oswald text-2xl uppercase leading-none text-[black]">Explore</p>
+            <p className="font-oswald text-lg sm:text-2xl uppercase leading-none text-[black]">Explore</p>
             <div className="mt-4 space-y-2 font-['Poppins',sans-serif] text-[10px] leading-[1.2]">
               {exploreLinks.map((item) => (
                 <Link key={item} href="#" className="block transition text-black hover:text-red-600">
@@ -48,7 +48,7 @@ export default function DeveloperFooter() {
           </div>
 
           <div>
-            <p className="font-oswald text-2xl uppercase leading-none text-[black]">Follow</p>
+            <p className="font-oswald text-lg sm:text-2xl uppercase leading-none text-[black]">Follow</p>
             <div className="mt-4 space-y-2 font-['Poppins',sans-serif] text-[10px] leading-[1.2]">
               {followLinks.map((item) => (
                 <Link key={item} href="#" className="block transition text-black hover:text-red-600">
@@ -59,12 +59,12 @@ export default function DeveloperFooter() {
           </div>
 
           <div>
-            <p className="font-oswald text-2xl uppercase leading-none text-[black]">Contact</p>
+            <p className="font-oswald text-lg sm:text-2xl uppercase leading-none text-[black]">Contact</p>
             <Link
               href="mailto:hello@chiraastudio.com"
-              className="mt-4 block font-['Poppins',sans-serif] text-[10px] leading-[1.2] transition text-black hover:text-red-600"
+              className="mt-4 block font-['Poppins',sans-serif] break-all text-[10px] leading-[1.2] transition text-black hover:text-red-600"
             >
-              chiranthajanith96@.com<br/>
+              chiranthajanith96@.com<br />
               +94 70 22 52 271
             </Link>
           </div>

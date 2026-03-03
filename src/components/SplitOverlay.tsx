@@ -24,13 +24,13 @@ export default function SplitOverlay() {
         animate={{ x: "120%" }}
         transition={{ duration: 1.3, delay: 0.8, ease: [0.77, 0, 0.175, 1] }}
       >
-        <div className="absolute bottom-16 right-20">
+        <div className="absolute bottom-12 right-8 sm:bottom-16 sm:right-20">
           <Image
             src="/img/logow.png"
             alt="Overlay logo"
             width={96}
             height={96}
-            className="h-32 w-auto"
+            className="h-20 sm:h-24 md:h-32 w-auto"
             priority
           />
         </div>

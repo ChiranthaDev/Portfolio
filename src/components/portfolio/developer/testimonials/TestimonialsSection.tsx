@@ -35,9 +35,9 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="bg-[white] px-2 py-14 sm:px-4 lg:py-24">
+    <section className="bg-[white] px-2 py-10 sm:px-4 lg:py-16 relative z-20">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-        <div className="relative mx-auto h-[75vw] w-[75vw] sm:h-[85mm] sm:w-[85mm]">
+        <div className="order-last lg:order-none relative mx-auto h-[75vw] w-[75vw] sm:h-[85mm] sm:w-[85mm]">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard
               key={testimonial.id}

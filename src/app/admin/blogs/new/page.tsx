@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 export default function NewBlogPostPage() {
     const router = useRouter();
     const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");
     const [linkedinLink, setLinkedinLink] = useState("");
     const [status, setStatus] = useState("Draft");
 
@@ -33,7 +32,7 @@ export default function NewBlogPostPage() {
 
     const handleSave = async (e: React.FormEvent, saveStatus: string) => {
         e.preventDefault();
-        if (!title || !category || !linkedinLink) return alert("Please fill all required fields");
+        if (!title || !linkedinLink) return alert("Please fill all required fields");
 
         setIsSubmitting(true);
         setStatus(saveStatus);
@@ -47,7 +46,6 @@ export default function NewBlogPostPage() {
 
             const blogData = {
                 title,
-                category,
                 linkedinLink,
                 status: saveStatus,
                 coverImage: coverImageUrl,
@@ -108,7 +106,7 @@ export default function NewBlogPostPage() {
                 <form className="p-6 md:p-8 space-y-8">
                     {/* General Info */}
                     <div className="space-y-6">
-                        <div className="grid gap-6 md:grid-cols-2">
+                        <div className="grid gap-6 md:grid-cols-1">
                             <div className="space-y-2">
                                 <label className="text-sm font-semibold text-neutral-900 dark:text-white">Post Title</label>
                                 <input
@@ -119,21 +117,6 @@ export default function NewBlogPostPage() {
                                     className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-[#FF0000] focus:outline-none focus:ring-1 focus:ring-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:focus:border-[#FF0000]"
                                     required
                                 />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-neutral-900 dark:text-white">Category</label>
-                                <select
-                                    value={category}
-                                    onChange={(e) => setCategory(e.target.value)}
-                                    className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-[#FF0000] focus:outline-none focus:ring-1 focus:ring-[#FF0000] dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:focus:border-[#FF0000]"
-                                    required
-                                >
-                                    <option value="" disabled>Select category</option>
-                                    <option value="UI/UX Design">UI/UX Design</option>
-                                    <option value="Web Engineering">Web Engineering</option>
-                                    <option value="Frontend Design">Frontend Design</option>
-                                    <option value="Design Systems">Design Systems</option>
-                                </select>
                             </div>
                         </div>
 
