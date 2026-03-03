@@ -172,7 +172,7 @@ export default function LatestProjectWorkSection() {
                 aria-label="Previous works"
                 onClick={() => handleSlide("prev")}
                 disabled={!canGoPrev}
-                className="absolute left-3 top-1/2 z-20 -translate-y-1/2 text-6xl leading-none text-black/50 hover:text-black disabled:cursor-not-allowed disabled:opacity-30 md:left-8"
+                className="absolute left-3 top-1/2 z-20 -translate-y-1/2 text-6xl leading-none text-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30 md:left-8"
               >
                 &larr;
               </button>
@@ -182,7 +182,7 @@ export default function LatestProjectWorkSection() {
                 aria-label="Next works"
                 onClick={() => handleSlide("next")}
                 disabled={!canGoNext}
-                className="absolute right-3 top-1/2 z-20 -translate-y-1/2 text-6xl leading-none text-black/50 hover:text-black disabled:cursor-not-allowed disabled:opacity-30 md:right-8"
+                className="absolute right-3 top-1/2 z-20 -translate-y-1/2 text-6xl leading-none text-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30 md:right-8"
               >
                 &rarr;
               </button>
